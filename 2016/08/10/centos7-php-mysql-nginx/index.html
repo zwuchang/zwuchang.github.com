@@ -1,0 +1,840 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="centos7," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="以下，记录一次从头搭建CentOS7+Nginx1.10.1+MySQL5.6.32+PHP5.5.13的过程。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="centos7 下搭建PHP环境">
+<meta property="og:url" content="https://zhenxing2016.com/2016/08/10/centos7-php-mysql-nginx/index.html">
+<meta property="og:site_name" content="杨振星写字的地方">
+<meta property="og:description" content="以下，记录一次从头搭建CentOS7+Nginx1.10.1+MySQL5.6.32+PHP5.5.13的过程。">
+<meta property="og:updated_time" content="2016-10-24T02:03:54.825Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="centos7 下搭建PHP环境">
+<meta name="twitter:description" content="以下，记录一次从头搭建CentOS7+Nginx1.10.1+MySQL5.6.32+PHP5.5.13的过程。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://zhenxing2016.com/2016/08/10/centos7-php-mysql-nginx/"/>
+
+
+  <title> centos7 下搭建PHP环境 | 杨振星写字的地方 </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?c1c14efec73e83348da61a97bbae065e";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">杨振星写字的地方</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">一时兴起，记下所思所想。</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                centos7 下搭建PHP环境
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-10T11:20:10+08:00" content="2016-08-10">
+              2016-08-10
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/10/centos7-php-mysql-nginx/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/10/centos7-php-mysql-nginx/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>以下，记录一次从头搭建CentOS7+Nginx1.10.1+MySQL5.6.32+PHP5.5.13的过程。</p>
+</blockquote>
+<a id="more"></a>
+<h3 id="安装Centos7"><a href="#安装Centos7" class="headerlink" title="安装Centos7"></a>安装Centos7</h3><ul>
+<li><p>下载iso文件<br>因为系统是64位，所以直接下载64位iso文件 <a href="http://mirrors.sina.cn/centos/7/isos/x86_64/" target="_blank" rel="external">点此下载。</a></p>
+</li>
+<li><p>使用Virtualbox安装好，步骤略…</p>
+</li>
+<li><p>安装后配置</p>
+<ul>
+<li><p>查看当前系统环境</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">[root@localhost]# cat /etc/redhat-release</div><div class="line">CentOS Linux release 7.2.1511 (Core)        ---- CentOS7.2</div><div class="line"></div><div class="line">[root@localhost]# uname -r</div><div class="line">3.10.0-327.el7.x86_64</div><div class="line"></div><div class="line">[root@localhost]# uname -m</div><div class="line">x86_64                                     ---- 64位系统</div></pre></td></tr></table></figure>
+</li>
+<li><p>设置网络</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">命令行下查看当前系统网卡信息</div><div class="line">nmcli d</div><div class="line">图形界面模式</div><div class="line">nmtui</div></pre></td></tr></table></figure>
+<blockquote>
+<p>默认竟然不带ifconfig命令了，通过nmtui设置好网络后，使用yum install net-tools可以安装ifconfig，再输入ifconfig就可以了。</p>
+<p><a href="http://www.krizna.com/centos/setup-network-centos-7/" target="_blank" rel="external">详细说明参考http://www.krizna.com/centos/setup-network-centos-7/</a></p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>重启网络</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">systemctl restart network</div></pre></td></tr></table></figure>
+</li>
+<li><p>启动sshd，方便putty等ssh远程连接</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">systemctl start sshd</div></pre></td></tr></table></figure>
+</li>
+<li><p>安装相关辅助工具</p>
+<ol>
+<li><p>安装 vim</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum install vim</div></pre></td></tr></table></figure>
+</li>
+<li><p>安装 wget</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum install wget</div></pre></td></tr></table></figure>
+</li>
+<li><p>安装 tree 以树型方式展示目录结构</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum install tree</div></pre></td></tr></table></figure>
+</li>
+<li><p>安装lsof （list open files）是一个列出当前系统打开文件的工具</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum install lsof</div></pre></td></tr></table></figure>
+</li>
+<li><p>安装gcc gcc+ (编译安装软件时用到)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum install gcc gcc-c++</div></pre></td></tr></table></figure>
+</li>
+<li><p>安装rz/sz 上传下载工具 (lrzsz是一个搭配SecureCRT使用的上传下载工具)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum install lrzsz</div></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="安装nginx"><a href="#安装nginx" class="headerlink" title="安装nginx"></a>安装nginx</h3><ul>
+<li><p>先创建tools目录，以后下载的软件包都放在这目录下。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mkdir /home/tools</div></pre></td></tr></table></figure>
+</li>
+<li><p>进到tools目录下，从官网下载nginx。[目前最新稳定版1.10.1]</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd /home/tools</div><div class="line">wget http://nginx.org/download/nginx-1.10.1.tar.gz</div></pre></td></tr></table></figure>
+</li>
+<li><p>安装Nginx所需pcre库：</p>
+<blockquote>
+<p>pcre 全称perl compatible regular expressions perl兼容正则表达式，安装perl使Nginx支持URI重写功能的rewrite模块。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum install pcre pcre-devel -y</div></pre></td></tr></table></figure>
+</li>
+<li><p>查看是否安装好，有如下信息说明安装成功。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[root@localhost tools]# rpm -qa pcre pcre-devel</div><div class="line">pcre-devel-8.32-15.el7_2.1.x86_64</div><div class="line">pcre-8.32-15.el7_2.1.x86_64</div></pre></td></tr></table></figure>
+</li>
+<li><p>安装openssl-devel<br>1.先查看是否已安装，默认只安装了openssl。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@localhost tools]# rpm -qa openssl-devel openssl</div><div class="line">openssl-1.0.1e-42.el7.9.x86_64</div></pre></td></tr></table></figure>
+<p>2.开始安装:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@localhost tools]# yum install openssl openssl-devel -y</div></pre></td></tr></table></figure>
+<p>3.再检查安装情况:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[root@localhost tools]# rpm -qa openssl-devel openssl</div><div class="line">openssl-devel-1.0.1e-51.el7_2.5.x86_64</div><div class="line">openssl-1.0.1e-51.el7_2.5.x86_64</div></pre></td></tr></table></figure>
+<p>4.安装zlib</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum install zlib zlib-devel</div></pre></td></tr></table></figure>
+<p>5.为nginx添加用户（不允许登录，不创建家目录）。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">useradd nginx -s /sbin/nologin -M [不允许登录，不创建家目录]</div></pre></td></tr></table></figure>
+<p>6.解压nginx压缩包。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">tar zxvf nginx-1.10.1.tar.gz</div><div class="line">cd nginx-1.10.1</div></pre></td></tr></table></figure>
+<p>7.编译安装nginx,安装到/usr/local/nginx</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">./configure --user=nginx --group=nginx --prefix=/usr/local/nginx-1.10.1 --with-http_stub_status_module --with-http_ssl_module</div><div class="line">make</div><div class="line">make install</div></pre></td></tr></table></figure>
+<p>8.创建软链接，方便使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ln -s /usr/local/nginx-1.10.1/ /usr/local/nginx</div></pre></td></tr></table></figure>
+<p>9.启动nginx</p>
+<ul>
+<li><p>先检查配置文件语法是否正确</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[root@localhost nginx-1.10.1]# /usr/local/nginx/sbin/nginx -t</div><div class="line">nginx: the configuration file /usr/local/nginx-1.10.1/conf/nginx.conf syntax is ok</div><div class="line">nginx: configuration file /usr/local/nginx-1.10.1/conf/nginx.conf test is successful</div></pre></td></tr></table></figure>
+</li>
+<li><p>语法无误后启动(无任何输出表示正常)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/usr/local/nginx/sbin/nginx</div></pre></td></tr></table></figure>
+</li>
+<li><p>检查对应端口是否成功启动：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">lsof -i :80 (若提示commond not found ,需yum install lsof)</div><div class="line">COMMAND   PID  USER   FD   TYPE DEVICE SIZE/OFF NODE NAME</div><div class="line">nginx   28169  root    6u  IPv4  61244      0t0  TCP *:http (LISTEN)</div><div class="line">nginx   28170 nginx    6u  IPv4  61244      0t0  TCP *:http (LISTEN)</div></pre></td></tr></table></figure>
+</li>
+<li><p>或通过netstat来查看80端口</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@localhost nginx-1.10.1]# netstat -lnt | grep 80</div><div class="line">tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN</div></pre></td></tr></table></figure>
+</li>
+<li><p>至此，nginx启动正常，本地可用curl来测试下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl 192.168.3.188</div></pre></td></tr></table></figure>
+</li>
+<li><p>如果局域网通过IP访问不了的话，先让防火墙允许80端口：<br>1.允许80端口：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">firewall-cmd --zone=public --add-port=80/tcp --permanent</div></pre></td></tr></table></figure>
+<p>2.重启firewall：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">firewall-cmd --reload</div></pre></td></tr></table></figure>
+<p>3.<a href="http://stackoverflow.com/questions/24729024/centos-7-open-firewall-port" target="_blank" rel="external">点此参考如何开放端口</a></p>
+</li>
+</ul>
+<p>10.配置nginx</p>
+<blockquote>
+<p>nginx主配置文件nginx.conf在安装目录conf下，如安装在/usr/local/nginx,主配置文件就是/usr/local/nginx/conf/nginx.conf<br>为便于管理和看起来清晰，配置虚拟主机时，不直接修改主配置文件，以include包含vhosts/*.conf形式来进行管理。<br>在/usr/local/nginx/conf/下新建vhosts目录，进到vhosts目录，新建status.conf,用来查看nginx运行相关信息：</p>
+</blockquote>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">server&#123;</div><div class="line">    listen 80;</div><div class="line">    server_name   status.test.com;</div><div class="line">    location / &#123;</div><div class="line">        stub_status on;  #打开状态信息开关</div><div class="line">        access_log off;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>  11.检查语法并重新加载nginx配置文件</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">/usr/local/nginx/sbin/nginx -t</div><div class="line">/usr/local/nginx/sbin/nginx -s reload</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="安装mysql"><a href="#安装mysql" class="headerlink" title="安装mysql"></a>安装mysql</h3><ul>
+<li><p>下载mysql5.6二进制包，解压并配置后直接可用。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cd /home/tools</div><div class="line">wget http://cdn.mysql.com//Downloads/MySQL-5.6/mysql-5.6.32-linux-glibc2.5-x86_64.tar.gz</div><div class="line">注：如果速度太慢，复制这链接到迅雷上下载到，然后通过rs上传到/home/tools下。</div></pre></td></tr></table></figure>
+</li>
+<li><p>解压</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">tar zxvf mysql-5.6.32-linux-glibc2.5-x86_64.tar.gz</div></pre></td></tr></table></figure>
+</li>
+<li><p>移到/usr/local/下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mv mysql-5.6.32-linux-glibc2.5-x86_64 /usr/local/mysql-5.6.32</div></pre></td></tr></table></figure>
+</li>
+<li><p>创建软链接</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ln -s /usr/local/mysql-5.6.32/ /usr/local/mysql</div></pre></td></tr></table></figure>
+</li>
+<li><p>创建mysql数据存放目录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mkdir /var/data/mysql -p</div></pre></td></tr></table></figure>
+</li>
+<li><p>为mysql添加用户[不允许登录，不创建家目录]</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">useradd mysql -s /sbin/nologin -M</div></pre></td></tr></table></figure>
+</li>
+<li><p>授权mysql 用户管理MySQL安装目录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chown -R mysql.mysql /usr/local/mysql/</div></pre></td></tr></table></figure>
+</li>
+<li><p>初始化mysql</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">/usr/local/mysql/scripts/mysql_install_db --basedir=/usr/local/mysql --datadir=/var/data/mysql --user=mysql</div><div class="line"></div><div class="line">若报错：</div><div class="line">  FATAL ERROR: please install the following Perl modules before executing ./scripts/mysql_install_db:</div><div class="line"></div><div class="line">  Data::Dumper</div><div class="line"></div><div class="line">  先搜索perl-Module包 yum list|grep -i perl-modul*</div><div class="line">  安装 yum install -y perl-Module-Install.noarch</div></pre></td></tr></table></figure>
+</li>
+<li><p>设置mysql启动脚本</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cp /usr/local/mysql/support-files/mysql.server /etc/init.d/mysqld</div><div class="line">chmod +x /etc/init.d/mysqld</div></pre></td></tr></table></figure>
+</li>
+<li><p>启动mysql</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">/etc/init.d/mysqld start</div><div class="line"></div><div class="line">  若报错“Starting MySQL. The server quit without updating PID file”</div><div class="line">  请检查/etc/my.cnf中mysql执行路径是否根上面设置的一致：</div><div class="line"></div><div class="line">  [mysqld]</div><div class="line">  datadir=/var/data/mysql</div><div class="line">  socket=/tmp/mysql.sock</div><div class="line">  [mysqld_safe]</div><div class="line">  log-error=/var/log/mysql/mysql.log</div><div class="line">  pid-file=/var/run/mysql.pid</div></pre></td></tr></table></figure>
+</li>
+<li><p>建立mysql日志目录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mkdir /var/log/mysql</div></pre></td></tr></table></figure>
+</li>
+<li><p>检查是否启动</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">netstat -lntup | grep mysql</div></pre></td></tr></table></figure>
+</li>
+<li><p>设置环境变量，全局可用mysql</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">vim /etc/profile</div><div class="line">最后添加</div><div class="line">export PATH=$PATH:/usr/local/mysql/bin</div></pre></td></tr></table></figure>
+</li>
+<li><p>保存后，使其马上生效：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">source /etc/profile</div></pre></td></tr></table></figure>
+</li>
+<li><p>检查环境变量，是否添加成功：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">echo $PATH</div><div class="line">/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/usr/local/mysql/bin:/root/bin</div></pre></td></tr></table></figure>
+</li>
+<li><p>登录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">输入 mysql -uroot 直接就登录了...</div></pre></td></tr></table></figure>
+</li>
+<li><p>必须得设置root密码才行<br><a href="http://zhenxing2016.com/2016/08/10/mysql-common/#more">参考</a></p>
+<h3 id="安装PHP"><a href="#安装PHP" class="headerlink" title="安装PHP"></a>安装PHP</h3><p><em>centos7一条命令安装gd库，yum install php-gd[一条命令解决gd库支持]</em></p>
+</li>
+<li><p>查询php需要用到的一些依赖库是否安装：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">rpm -qa zlib-devel libxml2-devel libjpeg-turbo-devel libiconv-devel</div><div class="line">rpm -qa freetype-devel libpng-devel gd-devel libcurl-devel</div></pre></td></tr></table></figure>
+</li>
+<li><p>若没安装，安装:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">yum install  zlib-devel libxml2-devel libjpeg-turbo-devel libiconv-devel</div><div class="line">yum install freetype-devel libpng-devel gd-devel libcurl-devel</div></pre></td></tr></table></figure>
+</li>
+<li><p>libiconv-devel 不在yum库中，需要单独编译安装<br>1.下载</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd /home/tools</div><div class="line">wget http://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.14.tar.gz</div></pre></td></tr></table></figure>
+<p>2.解压</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">tar zxvf libiconv-1.14.tar.gz</div></pre></td></tr></table></figure>
+<p>3.编译安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">cd libiconv-1.14</div><div class="line">./configure --prefix=/usr/local/libiconv</div><div class="line">make</div><div class="line">make install</div></pre></td></tr></table></figure>
+<blockquote>
+<p>第3步make可能报错： ‘gets’ undeclared here (not in a function)，解决方法：<br>打开srclib/stdio.in.h，大概698行，找到 _GL_WARN_ON_USE (gets, “gets is a security hole - use fgets instead”);<br>将它注释（或删除）后，在它下面添加三行：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">#if defined(__GLIBC__) &amp;&amp; !defined(__UCLIBC__) &amp;&amp; !__GLIBC_PREREQ(2, 16)</div><div class="line">_GL_WARN_ON_USE (gets, &quot;gets is a security hole - use fgets instead&quot;);</div><div class="line">#endif</div></pre></td></tr></table></figure>
+</li>
+<li><p>安装libmcrypt库<br>CentOS默认yum源里没有libmcrypt-devel,配置epel第三方yum源：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">wget -O /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-7.repo</div><div class="line">yum install libmcrypt-devel</div></pre></td></tr></table></figure>
+</li>
+<li><p>下载php (为了兼容以前程序，从官网下载php5.5.13)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd /home/tools</div><div class="line">wget -O php5.5.13.tar.gz  http://cn2.php.net/get/php-5.5.13.tar.gz/from/this/mirror</div></pre></td></tr></table></figure>
+</li>
+<li><p>解压</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">tar zxvf php5.5.13.tar.gz</div></pre></td></tr></table></figure>
+</li>
+<li><p>编译</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">cd php5.5.13</div><div class="line">开始编译安装：</div><div class="line">./configure \</div><div class="line">--prefix=/usr/local/php-5.5.13 \</div><div class="line">--with-mysql=mysqlnd \</div><div class="line">--with-pdo-mysql=mysqlnd \</div><div class="line">--with-mysqli=mysqlnd \</div><div class="line">--enable-mysqlnd \</div><div class="line">--with-iconv-dir=/usr/local/libiconv \</div><div class="line">--with-freetype-dir \</div><div class="line">--with-jpeg-dir \</div><div class="line">--with-zlib \</div><div class="line">--with-libxml-dir=/usr \</div><div class="line">--enable-xml \</div><div class="line">--with-curl \</div><div class="line">--enable-fpm \</div><div class="line">--enable-mbregex \</div><div class="line">--enable-mbstring \</div><div class="line">--with-mcrypt \</div><div class="line">--with-gd \</div><div class="line">--with-openssl \</div><div class="line">--with-mhash \</div><div class="line">--enable-pcntl \</div><div class="line">--enable-sockets \</div><div class="line">--with-xmlrpc \</div><div class="line">--enable-zip \</div><div class="line">--enable-soap \</div><div class="line">--with-fpm-user=nginx \</div><div class="line">--with-fpm-group=nginx</div></pre></td></tr></table></figure>
+</li>
+<li><p>安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">make</div><div class="line">make install</div></pre></td></tr></table></figure>
+<p>[注意每行\前面留一空格，后面不能有任何字符]</p>
+</li>
+<li><p>创建软链接</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ln -s /usr/local/php-5.5.13 /usr/local/php</div></pre></td></tr></table></figure>
+</li>
+<li><p>拷贝php配置文件到php默认目录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cp /home/tools/php-5.5.13/php.ini-production  /usr/local/php/lib/php.ini</div></pre></td></tr></table></figure>
+</li>
+<li><p>设置时区，编辑php.ini文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">vim  /usr/local/php-5.5.13/lib/php.ini</div><div class="line">[大约913行]</div><div class="line">;date.timezone =</div><div class="line">改成：date.timezone = Asia/Shanghai</div></pre></td></tr></table></figure>
+</li>
+<li><p>配置php-fpm.conf</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cp /usr/local/php/etc/php-fpm.conf.default  /usr/local/php/etc/php-fpm.conf</div></pre></td></tr></table></figure>
+</li>
+<li><p>启动php-fpm</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/usr/local/php/sbin/php-fpm</div></pre></td></tr></table></figure>
+</li>
+<li><p>使用ps检查php-fpm是否启动</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[root@localhost php]# ps -ef | grep php-fpm</div><div class="line">root     28898     1  0 05:17 ?        00:00:00 php-fpm: master process (/usr/local/php-5.5.13/etc/php-fpm.conf)</div><div class="line">nginx    28899 28898  0 05:17 ?        00:00:00 php-fpm: pool www</div><div class="line">nginx    28900 28898  0 05:17 ?        00:00:00 php-fpm: pool www</div><div class="line">root     28908  2780  0 05:18 pts/1    00:00:00 grep --color=auto php-fpm</div></pre></td></tr></table></figure>
+</li>
+<li><p>或用lsof检查9000端口</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[root@localhost php]# lsof -i :9000</div><div class="line">COMMAND   PID  USER   FD   TYPE DEVICE SIZE/OFF NODE NAME</div><div class="line">php-fpm 28898  root    7u  IPv4 214270      0t0  TCP localhost:cslistener (LISTEN)</div><div class="line">php-fpm 28899 nginx    0u  IPv4 214270      0t0  TCP localhost:cslistener (LISTEN)</div><div class="line">php-fpm 28900 nginx    0u  IPv4 214270      0t0  TCP localhost:cslistener (LISTEN)</div></pre></td></tr></table></figure>
+</li>
+<li><p>配置nginx支持php,在server段添加:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">location ~ \.php$ &#123;</div><div class="line">    root html/test;</div><div class="line">    fastcgi_pass 127.0.0.1:9000;</div><div class="line">    fastcgi_index index.php;</div><div class="line">    include fastcgi.conf;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/centos7/" rel="tag">#centos7</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/04/vim-常用命令/" rel="next" title="vim 常用命令备忘录">
+                <i class="fa fa-chevron-left"></i> vim 常用命令备忘录
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/08/10/mysql-common/" rel="prev" title="mysql笔记">
+                mysql笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/08/10/centos7-php-mysql-nginx/"
+           data-title="centos7 下搭建PHP环境" data-url="https://zhenxing2016.com/2016/08/10/centos7-php-mysql-nginx/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="zxzhaw" />
+          <p class="site-author-name" itemprop="name">zxzhaw</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">16</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装Centos7"><span class="nav-number">1.</span> <span class="nav-text">安装Centos7</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装nginx"><span class="nav-number">2.</span> <span class="nav-text">安装nginx</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装mysql"><span class="nav-number">3.</span> <span class="nav-text">安装mysql</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装PHP"><span class="nav-number">4.</span> <span class="nav-text">安装PHP</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zxzhaw</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"zhenxing"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

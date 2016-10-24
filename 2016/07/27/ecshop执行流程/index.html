@@ -1,0 +1,774 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="ecshop," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="以购物流程flow.php的执行来记录ecshop运行机制:">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ecshop执行流程">
+<meta property="og:url" content="https://zhenxing2016.com/2016/07/27/ecshop执行流程/index.html">
+<meta property="og:site_name" content="杨振星写字的地方">
+<meta property="og:description" content="以购物流程flow.php的执行来记录ecshop运行机制:">
+<meta property="og:updated_time" content="2016-10-24T02:03:54.825Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ecshop执行流程">
+<meta name="twitter:description" content="以购物流程flow.php的执行来记录ecshop运行机制:">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://zhenxing2016.com/2016/07/27/ecshop执行流程/"/>
+
+
+  <title> ecshop执行流程 | 杨振星写字的地方 </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?c1c14efec73e83348da61a97bbae065e";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">杨振星写字的地方</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">一时兴起，记下所思所想。</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                ecshop执行流程
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-07-27T15:05:18+08:00" content="2016-07-27">
+              2016-07-27
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/07/27/ecshop执行流程/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/07/27/ecshop执行流程/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>以购物流程flow.php的执行来记录ecshop运行机制:<br><a id="more"></a></p>
+<h3 id="一、定义IN-ECTOUCH常量为true。"><a href="#一、定义IN-ECTOUCH常量为true。" class="headerlink" title="一、定义IN_ECTOUCH常量为true。"></a>一、定义IN_ECTOUCH常量为true。</h3><p>一般情况下，引入的文件都会先检测此常量是否存在，防止外部直接访问。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">if (!defined(&apos;IN_ECTOUCH&apos;))</div><div class="line">&#123;</div><div class="line">    die(&apos;Hacking attempt&apos;);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="二、引入init-php-初始文件"><a href="#二、引入init-php-初始文件" class="headerlink" title="二、引入init.php 初始文件"></a>二、引入init.php 初始文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">require(dirname(__FILE__) . &apos;/include/init.php&apos;);</div><div class="line"> [注意，前后台引入的init.php文件路径，里面有区别的！]</div><div class="line">假如安装目录在D:/wamp/www/b2c/，即 D:/wamp/www/b2c/mobile/include/init.php</div></pre></td></tr></table></figure>
+<h4 id="1-引入配置文件"><a href="#1-引入配置文件" class="headerlink" title="1. 引入配置文件"></a>1. 引入配置文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">require(dirname(__FILE__) . &apos;/../data/config.php&apos;);</div><div class="line">即 D:\wamp\www\b2c\mobile\data\config.php</div></pre></td></tr></table></figure>
+<ul>
+<li><p>在config.php中</p>
+<ul>
+<li><p>1.1 引入默认配置文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">require(dirname(__FILE__) . &apos;/convention.php&apos;);</div><div class="line">即 D:\wamp\www\b2c\mobile\data/convention.php</div></pre></td></tr></table></figure>
+<ul>
+<li><p>定义全局常量 ROOT_PATH</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">define(&apos;ROOT_PATH&apos;, str_replace(&apos;data/convention.php&apos;, &apos;&apos;, str_replace(&apos;\\&apos;, &apos;/&apos;, __FILE__)));</div><div class="line">即 D:/wamp/www/b2c/mobile/</div></pre></td></tr></table></figure>
+</li>
+<li><p>检测需要安装服务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">if (!file_exists(ROOT_PATH.&apos;data/install.lock&apos;) &amp;&amp; !stripos(getcwd(), &apos;install&apos;))</div><div class="line">&#123;</div><div class="line">    header(&apos;location: ./install/index.php&apos;);</div><div class="line">    exit;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>全局数据库配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">引入数据库配置文件</div><div class="line">require(ROOT_PATH . &apos;../data/config.php&apos;);</div><div class="line">即 D:\wamp\www\b2c\data\config.php</div></pre></td></tr></table></figure>
+</li>
+<li><p>时区设置</p>
+</li>
+<li>日志和错误调试配置</li>
+<li>网址配置</li>
+<li>模块配置</li>
+<li>操作配置</li>
+<li>模型配置</li>
+<li>静态页面缓存</li>
+<li>数据库配置</li>
+<li>文件缓存配置</li>
+<li>memcache配置，可配置多台memcache服务器</li>
+<li>模板目录</li>
+<li>普通文件缓存</li>
+<li>自动加载扩展目录</li>
+<li>是否缓存权限信息</li>
+</ul>
+</li>
+<li>1.2 设置默认配置<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">存在$config数组中(网站全局配置,邮箱服务器配置,EcTouch版本)</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-初始化设置"><a href="#2-初始化设置" class="headerlink" title="2.初始化设置"></a>2.初始化设置</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">@ini_set(&apos;memory_limit&apos;, &apos;640M&apos;);</div><div class="line">@ini_set(&apos;session.cache_expire&apos;, 180);</div><div class="line">@ini_set(&apos;session.use_trans_sid&apos;, 0);</div><div class="line">@ini_set(&apos;session.use_cookies&apos;, 1);</div><div class="line">@ini_set(&apos;session.auto_start&apos;, 0);</div><div class="line">@ini_set(&apos;display_errors&apos;, 1);</div></pre></td></tr></table></figure>
+<h4 id="3-引入常用操作类"><a href="#3-引入常用操作类" class="headerlink" title="3.引入常用操作类"></a>3.引入常用操作类</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">require(ROOT_PATH . &apos;include/inc_constant.php&apos;);</div><div class="line">require(ROOT_PATH . &apos;include/cls_ecshop.php&apos;);</div><div class="line">require(ROOT_PATH . &apos;include/cls_error.php&apos;);</div><div class="line">require(ROOT_PATH . &apos;include/lib_time.php&apos;);</div><div class="line">require(ROOT_PATH . &apos;include/lib_base.php&apos;);</div><div class="line">require(ROOT_PATH . &apos;include/lib_common.php&apos;);</div><div class="line">require(ROOT_PATH . &apos;include/lib_main.php&apos;);</div><div class="line">require(ROOT_PATH . &apos;include/lib_insert.php&apos;);</div><div class="line">require(ROOT_PATH . &apos;include/lib_goods.php&apos;);</div><div class="line">require(ROOT_PATH . &apos;include/lib_article.php&apos;);</div><div class="line">require(ROOT_PATH . &apos;include/cls_cookie.php&apos;);</div></pre></td></tr></table></figure>
+<h4 id="4-对用户传入的变量进行转义操作"><a href="#4-对用户传入的变量进行转义操作" class="headerlink" title="4.对用户传入的变量进行转义操作"></a>4.对用户传入的变量进行转义操作</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">if (!get_magic_quotes_gpc()) &#123;</div><div class="line">    if (!empty($_GET)) &#123;</div><div class="line">        $_GET = addslashes_deep($_GET);</div><div class="line">    &#125;</div><div class="line">    if (!empty($_POST)) &#123;</div><div class="line">        $_POST = addslashes_deep($_POST);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    $_COOKIE = addslashes_deep($_COOKIE);</div><div class="line">    $_REQUEST = addslashes_deep($_REQUEST);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="5-创建-ECSHOP-对象"><a href="#5-创建-ECSHOP-对象" class="headerlink" title="5.创建 ECSHOP 对象"></a>5.创建 ECSHOP 对象</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ecs = new ECS($db_name, $prefix);</div><div class="line">define(&apos;DATA_DIR&apos;, $ecs-&gt;data_dir());</div><div class="line">define(&apos;IMAGE_DIR&apos;, $ecs-&gt;image_dir());</div></pre></td></tr></table></figure>
+<h4 id="6-初始化数据库类"><a href="#6-初始化数据库类" class="headerlink" title="6.初始化数据库类"></a>6.初始化数据库类</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">require(ROOT_PATH . &apos;include/cls_mysql.php&apos;);</div><div class="line">$db = new cls_mysql($db_host, $db_user, $db_pass, $db_name);</div><div class="line">$db-&gt;set_disable_cache_tables(array($ecs-&gt;table(&apos;sessions&apos;), $ecs-&gt;table(&apos;sessions_data&apos;), $ecs-&gt;table(&apos;cart&apos;)));</div><div class="line">$db_host = $db_user = $db_pass = $db_name = NULL;</div></pre></td></tr></table></figure>
+<h4 id="7-创建错误处理对象"><a href="#7-创建错误处理对象" class="headerlink" title="7.创建错误处理对象"></a>7.创建错误处理对象</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$err = new ecs_error(&apos;message.dwt&apos;);</div></pre></td></tr></table></figure>
+<h4 id="8-载入系统参数"><a href="#8-载入系统参数" class="headerlink" title="8.载入系统参数"></a>8.载入系统参数</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$_CFG = load_config();</div><div class="line">读取后台“系统设置”中设置的信息：</div><div class="line">先从缓存文件中取，文件不存在时从数据库中取。</div><div class="line">$_CFG[&apos;URL_HTTP_HOST&apos;] = $config[&apos;site_url&apos;];</div></pre></td></tr></table></figure>
+<h4 id="9-载入语言文件"><a href="#9-载入语言文件" class="headerlink" title="9.载入语言文件"></a>9.载入语言文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">require(ROOT_PATH . &apos;lang/&apos; . $_CFG[&apos;lang&apos;] . &apos;/common.php&apos;);</div></pre></td></tr></table></figure>
+<h4 id="10-如果后台设置了关闭商城，前台显示关闭信息"><a href="#10-如果后台设置了关闭商城，前台显示关闭信息" class="headerlink" title="10.如果后台设置了关闭商城，前台显示关闭信息"></a>10.如果后台设置了关闭商城，前台显示关闭信息</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">/* 商店关闭了，输出关闭的消息 */</div><div class="line">    header(&apos;Content-type: text/html; charset=&apos; . EC_CHARSET);</div><div class="line">    die(&apos;&lt;div style=&quot;margin: 150px; text-align: center; font-size: 14px&quot;&gt;&lt;p&gt;&apos; . $_LANG[&apos;shop_closed&apos;] . &apos;&lt;/p&gt;&lt;p&gt;&apos; . $_CFG[&apos;close_comment&apos;] . &apos;&lt;/p&gt;&lt;/div&gt;&apos;);</div></pre></td></tr></table></figure>
+<h4 id="11-初始化sessions"><a href="#11-初始化sessions" class="headerlink" title="11.初始化sessions"></a>11.初始化sessions</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">if (!defined(&apos;INIT_NO_USERS&apos;)) &#123;</div><div class="line">    /* 初始化session */</div><div class="line">    include(ROOT_PATH . &apos;include/cls_session.php&apos;);</div><div class="line">    $sess = new cls_session($db, $ecs-&gt;table(&apos;sessions&apos;), $ecs-&gt;table(&apos;sessions_data&apos;));</div><div class="line">    define(&apos;SESS_ID&apos;, $sess-&gt;get_session_id());</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="12-创建smarty对象"><a href="#12-创建smarty对象" class="headerlink" title="12.创建smarty对象"></a>12.创建smarty对象</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">/* 创建 Smarty 对象。 */</div><div class="line">if (!defined(&apos;INIT_NO_SMARTY&apos;)) &#123;</div><div class="line">    require(ROOT_PATH . &apos;include/cls_template.php&apos;);</div><div class="line">    $smarty = new cls_template;</div><div class="line">    $smarty-&gt;cache_lifetime = $_CFG[&apos;cache_time&apos;];</div><div class="line">    $smarty-&gt;template_dir = ROOT_PATH . &apos;themes/&apos; . $_CFG[&apos;template&apos;];</div><div class="line">    $smarty-&gt;cache_dir = ROOT_PATH . &apos;data/caches&apos;;</div><div class="line">    $smarty-&gt;compile_dir = ROOT_PATH . &apos;data/compiled&apos;;</div><div class="line">    ....</div><div class="line"></div><div class="line">    /* 创建 cls_cookie对象 搜索页用到 */</div><div class="line">    $cls_cookie = new cls_cookie();</div><div class="line">    $search_cookie = $cls_cookie-&gt;getCookie(&apos;search_histroys&apos;);</div><div class="line">    $smarty-&gt;assign(&apos;search_histroys&apos;,$search_cookie);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="13-会员信息"><a href="#13-会员信息" class="headerlink" title="13.会员信息"></a>13.会员信息</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">if (!defined(&apos;INIT_NO_USERS&apos;)) &#123;</div><div class="line">    /* 会员信息 */</div><div class="line">    $user = &amp; init_users();</div><div class="line">    ....</div><div class="line">&#125;</div><div class="line">init_users() 方法在 D:\wamp\www\b2c\mobile\include\lib_common.php中</div><div class="line">/**</div><div class="line"> * 初始化会员数据整合类</div><div class="line"> *</div><div class="line"> * @access  public</div><div class="line"> * @return  object</div><div class="line"> */</div><div class="line">function &amp;init_users()</div><div class="line">&#123;</div><div class="line">    $set_modules = false;</div><div class="line">    static $cls = null;</div><div class="line">    if ($cls != null)</div><div class="line">    &#123;</div><div class="line">        return $cls;</div><div class="line">    &#125;</div><div class="line">    include_once(ROOT_PATH . &apos;include/modules/integrates/&apos; . $GLOBALS[&apos;_CFG&apos;][&apos;integrate_code&apos;] . &apos;.php&apos;);</div><div class="line">    $cfg = unserialize($GLOBALS[&apos;_CFG&apos;][&apos;integrate_config&apos;]);</div><div class="line">    $cls = new $GLOBALS[&apos;_CFG&apos;][&apos;integrate_code&apos;]($cfg);</div><div class="line">    //默认情况下 $GLOBALS[&apos;_CFG&apos;][&apos;integrate_code&apos;] 的值为： ecshop</div><div class="line">    return $cls;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="14-设置推荐信息"><a href="#14-设置推荐信息" class="headerlink" title="14.设置推荐信息"></a>14.设置推荐信息</h4><p>略…</p>
+<h3 id="三、引入购物流程函数"><a href="#三、引入购物流程函数" class="headerlink" title="三、引入购物流程函数"></a>三、引入购物流程函数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">require(ROOT_PATH . &apos;include/lib_order.php&apos;);</div><div class="line">即 D:\wamp\www\b2c\mobile\include\lib_order.php</div></pre></td></tr></table></figure>
+<ul>
+<li>unserialize_config() 处理序列化的支付、配送的配置参数,返回一个以name为索引的数组</li>
+<li>shipping_list() 取得已安装的配送方式</li>
+<li>shipping_info() 取得配送方式信息</li>
+<li>available_shipping_list() 取得可用的配送方式列表</li>
+<li>shipping_area_info() 取得某配送方式对应于某收货地址的区域信息</li>
+<li>shipping_fee() 计算运费</li>
+<li>shipping_insure_fee() 获取指定配送的保价费用</li>
+<li>payment_list() 取得已安装的支付方式列表</li>
+<li>payment_info() 取得支付方式信息</li>
+<li>pay_fee() 获得订单需要支付的支付费用</li>
+<li>available_payment_list() 取得可用的支付方式列表</li>
+<li>pack_list() 取得包装列表</li>
+<li>pack_info() 取得包装信息</li>
+<li>pack_fee() 根据订单中的商品总额来获得包装的费用</li>
+<li>card_list() 取得贺卡列表</li>
+<li>card_info() 取得贺卡信息</li>
+<li>card_fee() 根据订单中商品总额获得需要支付的贺卡费用</li>
+<li>order_info() 取得订单信息</li>
+<li>order_finished() 判断订单是否已完成</li>
+<li>order_goods() 取得订单商品</li>
+<li>order_amount() 取得订单总金额</li>
+<li>order_weight_price() 取得某订单商品总重量和总金额（对应 cart_weight_price）</li>
+<li>order_fee() 获得订单中的费用信息</li>
+<li>update_order() 修改订单</li>
+<li>get_order_sn() 得到新订单号</li>
+<li>cart_goods() 取得购物车商品</li>
+<li>cart_amount() 取得购物车总金额</li>
+<li>cart_goods_exists() 检查某商品是否已经存在于购物车</li>
+<li>cart_weight_price() 获得购物车中商品的总重量、总价格、总数量</li>
+<li>addto_cart() 添加商品到购物车</li>
+<li>clear_cart() 清空购物车</li>
+<li>get_goods_attr_info() 获得指定的商品属性</li>
+<li>user_info() 取得用户信息</li>
+<li>update_user() 修改用户</li>
+<li>address_list() 取得用户地址列表</li>
+<li>address_info() 取得用户地址信息</li>
+<li>user_bonus() 取得用户当前可用红包</li>
+<li>bonus_info() 取得红包信息</li>
+<li>bonus_used() 检查红包是否已使用</li>
+<li>use_bonus() 设置红包为已使用</li>
+<li>unuse_bonus() 设置红包为未使用</li>
+<li>value_of_integral() 计算积分的价值（能抵多少钱）</li>
+<li>integral_of_value() 计算指定的金额需要多少积分</li>
+<li>order_refund() 订单退款</li>
+<li>get_cart_goods() 获得购物车中的商品</li>
+<li>get_consignee() 取得收货人信息</li>
+<li>exist_real_goods() 查询购物车（订单id为0）或订单中是否有实体商品</li>
+<li>check_consignee_info() 检查收货人信息是否完整</li>
+<li>last_shipping_and_payment() 获得上一次用户采用的支付和配送方式</li>
+<li>get_total_bonus() 取得当前用户应该得到的红包总额</li>
+<li>change_user_bonus() 处理红包（下订单时设为使用，取消（无效，退货）订单时设为未使用</li>
+<li>flow_order_info() 获得订单信息</li>
+<li>merge_order() 合并订单</li>
+<li>get_agency_by_regions() 查询配送区域属于哪个办事处管辖</li>
+<li>&amp;get_shipping_object() 获取配送插件的实例</li>
+<li>change_order_goods_storage() 改变订单中商品库存</li>
+<li>change_goods_storage() 商品库存增与减 货品库存增与减</li>
+<li>payment_id_list() 取得支付方式id列表</li>
+<li>order_query_sql() 生成查询订单的sql</li>
+<li>order_amount_field() 生成查询订单总金额的字段</li>
+<li>order_due_field() 生成计算应付款金额的字段</li>
+<li>compute_discount() 计算折扣：根据购物车和优惠活动</li>
+<li>get_give_integral() 取得购物车该赠送的积分数</li>
+<li>integral_to_give() 取得某订单应该赠送的积分数</li>
+<li>send_order_bonus() 发红包：发货时发红包</li>
+<li>return_order_bonus() 返回订单发放的红包</li>
+<li>order_bonus() 取得订单应该发放的红包</li>
+<li>compute_discount_amount() 计算购物车中的商品能享受红包支付的总额</li>
+<li>add_package_to_cart() 添加礼包到购物车</li>
+<li>get_delivery_sn() 得到新发货单号</li>
+<li>judge_package_stock() 检查礼包内商品的库存</li>
+</ul>
+<h3 id="四、-载入语言文件"><a href="#四、-载入语言文件" class="headerlink" title="四、 载入语言文件"></a>四、 载入语言文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">require_once(ROOT_PATH . &apos;lang/&apos; .$_CFG[&apos;lang&apos;]. &apos;/user.php&apos;);</div><div class="line">require_once(ROOT_PATH . &apos;lang/&apos; .$_CFG[&apos;lang&apos;]. &apos;/shopping_flow.php&apos;);</div></pre></td></tr></table></figure>
+<h3 id="五、根据-flow-php-step-xxx-的值进入不同流程"><a href="#五、根据-flow-php-step-xxx-的值进入不同流程" class="headerlink" title="五、根据 flow.php?step=xxx 的值进入不同流程"></a>五、根据 flow.php?step=xxx 的值进入不同流程</h3><p>若没设置step的值，默认等于cart  购物车列表</p>
+<ul>
+<li>添加商品到购物车 step=add_to_cart</li>
+<li>ajax_update_cart ajax更新购物车商品数量</li>
+<li>link_buy</li>
+<li>login 登录、注册</li>
+<li>consignee 收货人信息</li>
+<li>drop_consignee 删除收货人信息</li>
+<li>checkout 结算</li>
+<li>select_shipping 改变配送方式</li>
+<li>select_insure 选定/取消配送的保价</li>
+<li>select_payment 改变支付方式</li>
+<li>select_pack 改变商品包装</li>
+<li>select_card 改变贺卡</li>
+<li>change_surplus 改变余额</li>
+<li>change_integral 改变积分</li>
+<li>change_bonus 改变红包</li>
+<li>change_needinv 改变发票设置</li>
+<li>change_oos 改变缺货处理时的方式</li>
+<li>check_surplus 检查用户输入的余额</li>
+<li>check_integral 检查用户输入的积分</li>
+<li>done 完成所有订单操作，提交到数据库</li>
+<li>ok 微信支付</li>
+<li>update_cart 更新购物车</li>
+<li>drop_goods 删除购物车中的商品</li>
+<li>add_favourable 把优惠活动加入购物车</li>
+<li><p>clear</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$sql = &quot;DELETE FROM &quot; . $ecs-&gt;table(&apos;cart&apos;) . &quot; WHERE session_id=&apos;&quot; . SESS_ID . &quot;&apos;&quot;;</div><div class="line">$db-&gt;query($sql);</div><div class="line">ecs_header(&quot;Location:./\n&quot;);</div></pre></td></tr></table></figure>
+</li>
+<li><p>drop_to_collect</p>
+</li>
+<li>validate_bonus 验证红包序列号</li>
+<li>add_package_to_cart 添加礼包到购物车</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ecshop/" rel="tag">#ecshop</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/07/19/常用的一些工具/" rel="next" title="常用的一些工具">
+                <i class="fa fa-chevron-left"></i> 常用的一些工具
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/08/04/vim-常用命令/" rel="prev" title="vim 常用命令备忘录">
+                vim 常用命令备忘录 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/07/27/ecshop执行流程/"
+           data-title="ecshop执行流程" data-url="https://zhenxing2016.com/2016/07/27/ecshop执行流程/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="zxzhaw" />
+          <p class="site-author-name" itemprop="name">zxzhaw</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">16</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、定义IN-ECTOUCH常量为true。"><span class="nav-number">1.</span> <span class="nav-text">一、定义IN_ECTOUCH常量为true。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、引入init-php-初始文件"><span class="nav-number">2.</span> <span class="nav-text">二、引入init.php 初始文件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-引入配置文件"><span class="nav-number">2.1.</span> <span class="nav-text">1. 引入配置文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-初始化设置"><span class="nav-number">2.2.</span> <span class="nav-text">2.初始化设置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-引入常用操作类"><span class="nav-number">2.3.</span> <span class="nav-text">3.引入常用操作类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-对用户传入的变量进行转义操作"><span class="nav-number">2.4.</span> <span class="nav-text">4.对用户传入的变量进行转义操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-创建-ECSHOP-对象"><span class="nav-number">2.5.</span> <span class="nav-text">5.创建 ECSHOP 对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-初始化数据库类"><span class="nav-number">2.6.</span> <span class="nav-text">6.初始化数据库类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-创建错误处理对象"><span class="nav-number">2.7.</span> <span class="nav-text">7.创建错误处理对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-载入系统参数"><span class="nav-number">2.8.</span> <span class="nav-text">8.载入系统参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-载入语言文件"><span class="nav-number">2.9.</span> <span class="nav-text">9.载入语言文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#10-如果后台设置了关闭商城，前台显示关闭信息"><span class="nav-number">2.10.</span> <span class="nav-text">10.如果后台设置了关闭商城，前台显示关闭信息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#11-初始化sessions"><span class="nav-number">2.11.</span> <span class="nav-text">11.初始化sessions</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#12-创建smarty对象"><span class="nav-number">2.12.</span> <span class="nav-text">12.创建smarty对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#13-会员信息"><span class="nav-number">2.13.</span> <span class="nav-text">13.会员信息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#14-设置推荐信息"><span class="nav-number">2.14.</span> <span class="nav-text">14.设置推荐信息</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、引入购物流程函数"><span class="nav-number">3.</span> <span class="nav-text">三、引入购物流程函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四、-载入语言文件"><span class="nav-number">4.</span> <span class="nav-text">四、 载入语言文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#五、根据-flow-php-step-xxx-的值进入不同流程"><span class="nav-number">5.</span> <span class="nav-text">五、根据 flow.php?step=xxx 的值进入不同流程</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zxzhaw</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"zhenxing"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

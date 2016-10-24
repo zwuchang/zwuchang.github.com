@@ -1,0 +1,700 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="mysql," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="命令敲得少便容易忘。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mysql笔记">
+<meta property="og:url" content="https://zhenxing2016.com/2016/08/10/mysql-common/index.html">
+<meta property="og:site_name" content="杨振星写字的地方">
+<meta property="og:description" content="命令敲得少便容易忘。">
+<meta property="og:updated_time" content="2016-10-24T02:03:54.826Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="mysql笔记">
+<meta name="twitter:description" content="命令敲得少便容易忘。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://zhenxing2016.com/2016/08/10/mysql-common/"/>
+
+
+  <title> mysql笔记 | 杨振星写字的地方 </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?c1c14efec73e83348da61a97bbae065e";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">杨振星写字的地方</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">一时兴起，记下所思所想。</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                mysql笔记
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-10T13:18:02+08:00" content="2016-08-10">
+              2016-08-10
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/10/mysql-common/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/10/mysql-common/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>命令敲得少便容易忘。</p>
+</blockquote>
+<a id="more"></a>
+<h3 id="系统维护"><a href="#系统维护" class="headerlink" title="系统维护"></a>系统维护</h3><h4 id="设置开机启动"><a href="#设置开机启动" class="headerlink" title="设置开机启动"></a>设置开机启动</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">chkconfig --add mysqld</div><div class="line">chkconfig mysqld on</div><div class="line">chkconfig --list mysqld</div></pre></td></tr></table></figure>
+<h4 id="新安装的mysql的root密码为空，必须得为它设置一个密码："><a href="#新安装的mysql的root密码为空，必须得为它设置一个密码：" class="headerlink" title="新安装的mysql的root密码为空，必须得为它设置一个密码："></a>新安装的mysql的root密码为空，必须得为它设置一个密码：</h4><ul>
+<li><p>登录状态下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">SET PASSWORD FOR &apos;root&apos;@&apos;localhost&apos; = PASSWORD(&apos;newpass&apos;);</div></pre></td></tr></table></figure>
+</li>
+<li><p>未登录状态下（已设密码）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mysqladmin -u root -p password</div></pre></td></tr></table></figure>
+<p><em>回车后，输入原密码，再输入两次新密码（在输入密码过程中，屏幕不会显示出来。）</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Enter password:</div><div class="line">New password:</div><div class="line">Confirm new password:</div></pre></td></tr></table></figure>
+</li>
+<li><p>未登录状态（没设密码）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mysqladmin -u root password</div></pre></td></tr></table></figure>
+<p><em>回车后根据提示操作</em></p>
+</li>
+</ul>
+<h4 id="清理无用的mysql用户"><a href="#清理无用的mysql用户" class="headerlink" title="清理无用的mysql用户"></a>清理无用的mysql用户</h4><ul>
+<li><p>先查看有哪些用户:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">mysql&gt; select user,host from mysql.user;</div><div class="line">+------+-----------+</div><div class="line">| user | host      |</div><div class="line">+------+-----------+</div><div class="line">| root | 127.0.0.1 |</div><div class="line">| root | ::1       |</div><div class="line">|      | localhost |</div><div class="line">| root | localhost |</div><div class="line">+------+-----------+</div><div class="line">4 rows in set (0.00 sec)</div></pre></td></tr></table></figure>
+</li>
+<li><p>删除第6行和第7行用户:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">mysql&gt; drop user &quot;root&quot;@&quot;::1&quot;;</div><div class="line">Query OK, 0 rows affected (0.01 sec)</div><div class="line"></div><div class="line">mysql&gt; drop user &quot;&quot;@&quot;localhost&quot;;</div><div class="line">Query OK, 0 rows affected (0.01 sec)</div></pre></td></tr></table></figure>
+</li>
+<li><p>刷新权限</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mysql&gt; flush privileges;</div><div class="line">Query OK, 0 rows affected (0.01 sec)</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="创建数据库，并指定utf编码"><a href="#创建数据库，并指定utf编码" class="headerlink" title="创建数据库，并指定utf编码"></a>创建数据库，并指定utf编码</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">CREATE DATABASE `dbname` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci</div></pre></td></tr></table></figure>
+<h4 id="授权远程访问"><a href="#授权远程访问" class="headerlink" title="授权远程访问"></a>授权远程访问</h4><ul>
+<li>如下，默认只能本地访问：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">mysql&gt; select user,host from mysql.user;</div><div class="line">+------+-------------+</div><div class="line">| user | host        |</div><div class="line">+------+-------------+</div><div class="line">| root | 127.0.0.1   |</div><div class="line">| root | localhost   |</div><div class="line">+------+-------------+</div><div class="line">2 rows in set (0.00 sec)</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>要让远程用户可以访问，在防火墙允许情况下，只需要将mysql.user表中对应用户的host那栏值更改为需要的值就行。<br>如，% 代表允许所有客户端连接，192.168.3.111 指定ip可访问，192.168.3.% 这个ip段皆可访问。</p>
+</blockquote>
+<ul>
+<li><p>通过命令来改(授权指定ip)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">GRANT ALL PRIVILEGES ON *.* TO &apos;USERNAME&apos;@&apos;1.2.3.4&apos; IDENTIFIED BY &apos;PASSWORD&apos; WITH GRANT OPTION;</div></pre></td></tr></table></figure>
+</li>
+<li><p>允许所有客户端连接</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">GRANT ALL PRIVILEGES ON *.* TO &apos;USERNAME&apos;@&apos;%&apos; IDENTIFIED BY &apos;PASSWORD&apos; WITH GRANT OPTION;</div></pre></td></tr></table></figure>
+</li>
+<li><p>通过update来直接更改mysql.user表</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">update mysql.user set host = &apos;192.168.3.%&apos; where user=&apos;root&apos; and host=&apos;127.0.0.1&apos;;</div></pre></td></tr></table></figure>
+</li>
+<li><p>执行成功后，刷新权限</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">mysql&gt; select user,host from mysql.user;</div><div class="line">+------+-------------+</div><div class="line">| user | host        |</div><div class="line">+------+-------------+</div><div class="line">| root | 192.168.3.% |</div><div class="line">| root | localhost   |</div><div class="line">+------+-------------+</div><div class="line">2 rows in set (0.00 sec)</div><div class="line"></div><div class="line">mysql&gt; flush privileges;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="开启所有sql语句执行记录"><a href="#开启所有sql语句执行记录" class="headerlink" title="开启所有sql语句执行记录"></a>开启所有sql语句执行记录</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">SET GLOBAL general_log = &apos;ON&apos;;</div></pre></td></tr></table></figure>
+<h4 id="unix时间戳转为友好时间格式"><a href="#unix时间戳转为友好时间格式" class="headerlink" title="unix时间戳转为友好时间格式"></a>unix时间戳转为友好时间格式</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">SELECT</div><div class="line">  from_unixtime(timestamp)</div><div class="line">FROM</div><div class="line">  table_name</div></pre></td></tr></table></figure>
+<h4 id="复制表结构"><a href="#复制表结构" class="headerlink" title="复制表结构"></a>复制表结构</h4><blockquote>
+<p>创建表new_tab，并且结构跟tab表一致。</p>
+</blockquote>
+<ul>
+<li><p>方法一：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">create table new_tab like tab;</div></pre></td></tr></table></figure>
+</li>
+<li><p>方法二：利用show create table 查得建表语句，然后复制下来，稍微改改，粘贴到SQL解释器下执行。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">show create table tab\G;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="复制表结构和数据"><a href="#复制表结构和数据" class="headerlink" title="复制表结构和数据"></a>复制表结构和数据</h4><blockquote>
+<p>创建表new_tab，且结构和数据与tab表一样。</p>
+</blockquote>
+<ul>
+<li><p>已存在表new_tab，将tab表数据全复制过来</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">insert into new_tab select * from tab;</div></pre></td></tr></table></figure>
+</li>
+<li><p>不存在表new_tab，【注：通过下面方式操作，表索引和自增id没复制过来!】</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">create table new_tab select * from tab;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="windows下忘记root密码"><a href="#windows下忘记root密码" class="headerlink" title="windows下忘记root密码"></a>windows下忘记root密码</h4><ul>
+<li>关掉mysql服务</li>
+<li>cd 到mysql bin目录下</li>
+<li><p>跳过权限方式启动mysql</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mysqld --skip-grant-tables</div></pre></td></tr></table></figure>
+</li>
+<li><p>另开一窗口,执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">mysql -uroot -p</div><div class="line">UPDATE mysql.user SET password=PASSWORD(&apos;新密码&apos;) WHERE user=&apos;root&apos; AND host=&apos;localhost&apos;;  </div><div class="line">flush privileges;</div></pre></td></tr></table></figure>
+</li>
+<li><p>再以新密码登录试试？</p>
+</li>
+</ul>
+<h4 id="source-导入乱码"><a href="#source-导入乱码" class="headerlink" title="source 导入乱码"></a>source 导入乱码</h4><p>乱码问题大多是因为编码不统一造成的，因为之前存的时候都是utf-8编码。所以在windows下使用mysql -u root -p连接时指定编码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">mysql -u root -p --default-character-set=utf8 </div><div class="line">use database</div><div class="line">source data.sql</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/mysql/" rel="tag">#mysql</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/10/centos7-php-mysql-nginx/" rel="next" title="centos7 下搭建PHP环境">
+                <i class="fa fa-chevron-left"></i> centos7 下搭建PHP环境
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/08/10/nginx-config/" rel="prev" title="nginx相关设置">
+                nginx相关设置 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/08/10/mysql-common/"
+           data-title="mysql笔记" data-url="https://zhenxing2016.com/2016/08/10/mysql-common/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="zxzhaw" />
+          <p class="site-author-name" itemprop="name">zxzhaw</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">16</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#系统维护"><span class="nav-number">1.</span> <span class="nav-text">系统维护</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#设置开机启动"><span class="nav-number">1.1.</span> <span class="nav-text">设置开机启动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#新安装的mysql的root密码为空，必须得为它设置一个密码："><span class="nav-number">1.2.</span> <span class="nav-text">新安装的mysql的root密码为空，必须得为它设置一个密码：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#清理无用的mysql用户"><span class="nav-number">1.3.</span> <span class="nav-text">清理无用的mysql用户</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建数据库，并指定utf编码"><span class="nav-number">1.4.</span> <span class="nav-text">创建数据库，并指定utf编码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#授权远程访问"><span class="nav-number">1.5.</span> <span class="nav-text">授权远程访问</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#开启所有sql语句执行记录"><span class="nav-number">1.6.</span> <span class="nav-text">开启所有sql语句执行记录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#unix时间戳转为友好时间格式"><span class="nav-number">1.7.</span> <span class="nav-text">unix时间戳转为友好时间格式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#复制表结构"><span class="nav-number">1.8.</span> <span class="nav-text">复制表结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#复制表结构和数据"><span class="nav-number">1.9.</span> <span class="nav-text">复制表结构和数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#windows下忘记root密码"><span class="nav-number">1.10.</span> <span class="nav-text">windows下忘记root密码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#source-导入乱码"><span class="nav-number">1.11.</span> <span class="nav-text">source 导入乱码</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zxzhaw</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"zhenxing"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
